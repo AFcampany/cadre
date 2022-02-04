@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            height: 1000px;
+        }
+        #a{
+            height: 1000px;
+            width: 100%;   
+        }
+        .cadre{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 0;
+            border: 1px solid black;
+        }
+</style>
+</head>
+<body >
+    <div id="a"></div>
+<script>
+    let body= document.getElementById("a")
+        body.addEventListener("mousedown", press)
+        body.addEventListener("mouseup", release)
+
+        let records = []
+        // let[[a,b],[c,d]] = records
+        // console.log(a,b,c,d)
+        function press(e) {
+            records.push([e.clientX])
+            records[0].push(e.clientY)
+            console.log(records)
+        }
+        function release(e) {
+            records.push([e.clientX])
+            records[1].push(e.clientY)
+            const div = document.createElement("div")
+            let [a,b] = records.shift()
+            let [c,d] = records.shift()
+            let g= Math.abs(c-a)
+            let f= Math.abs(d-b)
+            console.log(a,b,c,d)
+            if ( d<b && a<c) {
+              b=d 
+            }
+            if ( b<d && c<a) {
+              a=c 
+            }
+            if ( d<b && c<a) {
+              b=d
+              a=c 
+            }
+            div.style.cssText = `position: absolute;border: 2px solid black;`
+            div.style.top = `${b}px`
+            div.style.left = `${a}px`
+            div.style.height = `${f}px`
+            div.style.width = `${g}px`
+            body.appendChild(div)
+        }
+
+</script>
+</body>
+</html>
